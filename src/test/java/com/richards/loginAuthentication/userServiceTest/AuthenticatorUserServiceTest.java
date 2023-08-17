@@ -2,6 +2,7 @@ package com.richards.loginAuthentication.userServiceTest;
 
 import com.richards.loginAuthentication.dto.requests.LoginRequest;
 import com.richards.loginAuthentication.dto.requests.RegistrationRequest;
+import com.richards.loginAuthentication.dto.response.LoginResponse;
 import com.richards.loginAuthentication.dto.response.RegistrationResponse;
 import com.richards.loginAuthentication.models.User;
 import com.richards.loginAuthentication.services.UserService;
@@ -49,6 +50,11 @@ public class AuthenticatorUserServiceTest {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("rich@gmail.com");
         loginRequest.setPassword("password");
+
+        assertThat(loginRequest).isNotNull();
+        LoginResponse response = userService.login(loginRequest);
+        assertThat(response.getMessage()).isEqualTo("Logged in");
+
 
     }
 }
