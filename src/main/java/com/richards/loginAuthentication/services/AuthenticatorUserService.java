@@ -2,7 +2,6 @@ package com.richards.loginAuthentication.services;
 
 import com.richards.loginAuthentication.dto.requests.RegistrationRequest;
 import com.richards.loginAuthentication.dto.response.RegistrationResponse;
-import com.richards.loginAuthentication.models.Address;
 import com.richards.loginAuthentication.models.User;
 import com.richards.loginAuthentication.repositories.UserRepository;
 import lombok.AllArgsConstructor;
@@ -19,12 +18,14 @@ public class AuthenticatorUserService implements UserService{
         String password = registrationRequest.getPassword();
         String firstName = registrationRequest.getFirstname();
         String lastName = registrationRequest.getLastname();
+
         User user = new User();
+
         user.setEmail(email);
         user.setPassword(password);
         user.setFirstname(firstName);
         user.setLastname(lastName);
-        user.setAddress(new Address());
+
 
         userRepository.save(user);
 

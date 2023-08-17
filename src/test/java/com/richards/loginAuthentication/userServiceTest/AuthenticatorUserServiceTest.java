@@ -1,5 +1,6 @@
 package com.richards.loginAuthentication.userServiceTest;
 
+import com.richards.loginAuthentication.dto.requests.LoginRequest;
 import com.richards.loginAuthentication.dto.requests.RegistrationRequest;
 import com.richards.loginAuthentication.dto.response.RegistrationResponse;
 import com.richards.loginAuthentication.models.User;
@@ -33,14 +34,21 @@ public class AuthenticatorUserServiceTest {
         registrationRequest.setFirstname("Richie");
         registrationRequest.setLastname("Chris");
         registrationRequest.setPassword("password");
-        registrationRequest.setState("Lagos");
-        registrationRequest.setHouseNumber("No10");
-        registrationRequest.setStreetNumber("No2");
+        registrationRequest.setEmail("rich@gmail.com");
+
 
         assertThat(registrationRequest).isNotNull();
 
         RegistrationResponse registeredUser = userService.register(registrationRequest);
         assertThat(registeredUser.getMessage()).isEqualTo("Registration successful");
+
+    }
+
+    @Test
+    void testThatUserCanLogin(){
+        LoginRequest loginRequest = new LoginRequest();
+        loginRequest.setEmail("rich@gmail.com");
+        loginRequest.setPassword("password");
 
     }
 }

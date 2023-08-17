@@ -17,13 +17,12 @@ import org.springframework.stereotype.Service;
 
 public class User {
    @Id
-    private String id;
+   @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
 
     private String firstname;
     private String lastname;
     private String password;
-    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    private Address address;
     private String email;
 
 }
