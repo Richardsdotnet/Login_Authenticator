@@ -4,12 +4,16 @@ import com.richards.loginAuthentication.dto.requests.LoginRequest;
 import com.richards.loginAuthentication.dto.requests.RegistrationRequest;
 import com.richards.loginAuthentication.dto.response.LoginResponse;
 import com.richards.loginAuthentication.dto.response.RegistrationResponse;
+import com.richards.loginAuthentication.exceptions.UserNotFoundException;
 import com.richards.loginAuthentication.models.User;
 import com.richards.loginAuthentication.repositories.UserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+
+import static com.richards.loginAuthentication.exceptions.ExceptionMessage.USER_WITH_EMAIL_NOT_FOUND_EXCEPTION;
+import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
 @Service
 @AllArgsConstructor
@@ -44,8 +48,13 @@ public class AuthenticatorUserService implements UserService{
         String password = loginRequest.getPassword();
 
         Optional<User> foundUser = userRepository.findUserByEmail(email);
-        foundUser.orElseThrow(() -> new UserNotFoundException(String.format("USER_WITH_EMAIL_NOT_FOUND", email)));
+       User user = foundUser.orElseThrow(() -> new UserNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND_EXCEPTION.getMessage(),email)));
+        boolean isValidPassword = matcher(user.getPassword(), password);
 
         return null;
+    }
+
+    private boolean matcher(String password1, String password2) {
+        return password1.equals(password2);
     }
 }
