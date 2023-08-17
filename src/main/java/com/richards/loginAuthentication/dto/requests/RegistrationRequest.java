@@ -15,8 +15,9 @@ public class RegistrationRequest {
     private String firstname;
     private String lastname;
     private String password;
-    private String state;
     private String houseNumber;
-    private String StreetNumber;
+    private String street;
+    private String state;
+    private String country;
 
 }

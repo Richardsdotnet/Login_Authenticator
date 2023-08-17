@@ -5,9 +5,11 @@ import com.richards.loginAuthentication.dto.response.RegistrationResponse;
 import com.richards.loginAuthentication.models.Address;
 import com.richards.loginAuthentication.models.User;
 import com.richards.loginAuthentication.repositories.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@AllArgsConstructor
 
 public class AuthenticatorUserService implements UserService{
     private UserRepository userRepository;
