@@ -46,16 +46,22 @@ public class AuthenticatorUserService implements UserService{
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) throws BadCredentialsExceptions {
+        LoginResponse response = new LoginResponse();
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
         Optional<User> foundUser = userRepository.findUserByEmail(email);
        User user = foundUser.orElseThrow(() -> new UserNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND_EXCEPTION.getMessage(),email)));
         boolean isValidPassword = matcher(user.getPassword(), password);
-        if (isValidPassword)
-            return new LoginResponse();
+        if (isValidPassword) return buildLoginResponse();
         throw new BadCredentialsExceptions(INVALID_CREDENTIALS_EXCEPTION.getMessage());
 
+    }
+
+    private LoginResponse buildLoginResponse() {
+        LoginResponse loginResponse = new LoginResponse();
+        loginResponse.setMessage("Logged in");
+        return loginResponse;
     }
 
     private boolean matcher(String password1, String password2) {

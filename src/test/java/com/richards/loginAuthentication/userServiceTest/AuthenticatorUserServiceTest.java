@@ -4,6 +4,7 @@ import com.richards.loginAuthentication.dto.requests.LoginRequest;
 import com.richards.loginAuthentication.dto.requests.RegistrationRequest;
 import com.richards.loginAuthentication.dto.response.LoginResponse;
 import com.richards.loginAuthentication.dto.response.RegistrationResponse;
+import com.richards.loginAuthentication.exceptions.BadCredentialsExceptions;
 import com.richards.loginAuthentication.models.User;
 import com.richards.loginAuthentication.services.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +26,6 @@ public class AuthenticatorUserServiceTest {
 
     @BeforeEach
     void setUp(){
-        User user = new  User();
 
     }
 
@@ -46,7 +46,7 @@ public class AuthenticatorUserServiceTest {
     }
 
     @Test
-    void testThatUserCanLogin(){
+    void testThatUserCanLogin() throws BadCredentialsExceptions {
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("rich@gmail.com");
         loginRequest.setPassword("password");
