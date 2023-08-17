@@ -4,6 +4,7 @@ import com.richards.loginAuthentication.dto.requests.LoginRequest;
 import com.richards.loginAuthentication.dto.requests.RegistrationRequest;
 import com.richards.loginAuthentication.dto.response.LoginResponse;
 import com.richards.loginAuthentication.dto.response.RegistrationResponse;
+import com.richards.loginAuthentication.exceptions.BadCredentialsExceptions;
 import com.richards.loginAuthentication.exceptions.UserNotFoundException;
 import com.richards.loginAuthentication.models.User;
 import com.richards.loginAuthentication.repositories.UserRepository;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+import static com.richards.loginAuthentication.exceptions.ExceptionMessage.INVALID_CREDENTIALS_EXCEPTION;
 import static com.richards.loginAuthentication.exceptions.ExceptionMessage.USER_WITH_EMAIL_NOT_FOUND_EXCEPTION;
 import static org.springframework.core.io.buffer.DataBufferUtils.matcher;
 
@@ -43,15 +45,17 @@ public class AuthenticatorUserService implements UserService{
     }
 
     @Override
-    public LoginResponse login(LoginRequest loginRequest) {
+    public LoginResponse login(LoginRequest loginRequest) throws BadCredentialsExceptions {
         String email = loginRequest.getEmail();
         String password = loginRequest.getPassword();
 
         Optional<User> foundUser = userRepository.findUserByEmail(email);
        User user = foundUser.orElseThrow(() -> new UserNotFoundException(String.format(USER_WITH_EMAIL_NOT_FOUND_EXCEPTION.getMessage(),email)));
         boolean isValidPassword = matcher(user.getPassword(), password);
+        if (isValidPassword)
+            return new LoginResponse();
+        throw new BadCredentialsExceptions(INVALID_CREDENTIALS_EXCEPTION.getMessage());
 
-        return null;
     }
 
     private boolean matcher(String password1, String password2) {

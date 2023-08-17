@@ -8,7 +8,8 @@ import lombok.Setter;
 
 public enum ExceptionMessage  {
 
-    USER_WITH_EMAIL_NOT_FOUND_EXCEPTION("user with email %s not found");
+    USER_WITH_EMAIL_NOT_FOUND_EXCEPTION("user with email %s not found"),
+    INVALID_CREDENTIALS_EXCEPTION("Invalid authentication credentials");
 
     private String message;
 
